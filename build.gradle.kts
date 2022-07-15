@@ -8,14 +8,13 @@ repositories {
 
 kotlin {
   targets {
-    macosArm64 {
-      binaries {
+    listOf(macosArm64(), macosX64()).forEach {
+      it.binaries {
         executable {
           entryPoint("net.mbonnin.pga.main")
         }
       }
     }
-    macosX64()
   }
 
   sourceSets {
