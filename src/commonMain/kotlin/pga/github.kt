@@ -2,14 +2,12 @@ package pga
 
 import io.ktor.client.*
 import io.ktor.client.call.*
-import io.ktor.client.engine.cio.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.*
 
-val client = HttpClient(CIO)
 
 /**
  * @return the sha of a given tag or branch or null if it isn't a tag or branch
@@ -65,7 +63,7 @@ private fun getShaFromRef(owner: String, name: String, ref: String): String? {
 
 private fun getJson(url: String): Any? {
   return runBlocking {
-    val response = client.get(url) {
+    val response = httpClient.get(url) {
       val token = readConfig()?.token
       if (token != null) {
         header("Authorization", "token $token")

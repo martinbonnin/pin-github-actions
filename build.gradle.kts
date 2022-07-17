@@ -32,12 +32,12 @@ kotlin {
   }
 
   sourceSets {
+    val ktorVersion = "2.0.3"
     val commonMain = getByName("commonMain") {
       dependencies {
         implementation("com.github.ajalt.clikt:clikt:3.5.0")
         implementation("com.squareup.okio:okio:3.2.0")
-        implementation("io.ktor:ktor-client-core:2.0.3")
-        implementation("io.ktor:ktor-client-cio:2.0.3")
+        implementation("io.ktor:ktor-client-core:$ktorVersion")
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
         implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
         implementation("com.github.ajalt.mordant:mordant:2.0.0-beta7")
@@ -49,15 +49,24 @@ kotlin {
       }
     }
 
-    val nativeMain = create("nativeMain") {
+    val darwinMain = create("darwinMain") {
       dependsOn(commonMain)
+      dependencies {
+        implementation("io.ktor:ktor-client-darwin:$ktorVersion")
+      }
     }
 
     getByName("macosX64Main") {
-      dependsOn(nativeMain)
+      dependsOn(darwinMain)
     }
     getByName("macosArm64Main") {
-      dependsOn(nativeMain)
+      dependsOn(darwinMain)
+    }
+
+    getByName("jvmMain") {
+      dependencies {
+        implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
+      }
     }
   }
 }

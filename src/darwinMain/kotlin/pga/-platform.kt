@@ -1,8 +1,10 @@
 package pga
 
+import io.ktor.client.*
 import kotlinx.cinterop.*
 import okio.FileSystem
 import platform.posix.*
+import io.ktor.client.engine.darwin.*
 
 actual val systemFileSystem = FileSystem.SYSTEM
 actual fun exitProcess(statusCode: Int): Nothing = kotlin.system.exitProcess(statusCode)
@@ -35,3 +37,5 @@ private fun updateTermios(block:termios.() -> Unit) {
 actual fun getenv(name: String): String? {
   return platform.posix.getenv(name)?.toKString()
 }
+
+actual val httpClient = HttpClient(Darwin)
