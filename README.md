@@ -4,13 +4,50 @@ Using a branch name or tag name as a version for a GitHub action is dangerous as
 
 `pin-github-actions` is a small command-line tool that replaces ("pins") branches or tag names with their corresponding commit sha.
 
+You can see it in action [in this commit](https://github.com/martinbonnin/pin-github-actions/commit/010942c1197441c0d329e167020a29482d1c43bc):
+
 ```diff
-
+--- a/.github/workflows/pr.yaml
++++ b/.github/workflows/pr.yaml
+@@ -7,9 +7,9 @@ jobs:
+     runs-on: macos-12
+ 
+     steps:
+-      - uses: actions/checkout@v3
+-      - uses: gradle/gradle-build-action@v2.2.1
+-      - uses: gradle/wrapper-validation-action@v1
++      - uses: actions/checkout@d0651293c4a5a52e711f25b41b05b2212f385d28 #v3
++      - uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1 #v2.2.1
++      - uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b #v1
+       - run: ./gradlew build
+         env:
 ```
-
 
 ### Installation
 
+```
+brew install martinbonnin/repo/pin-github-actions
+```
+
+> Note: because the binary is not notarized, you'll have to manually open the binary from finder the first time you run it. Watch https://github.com/martinbonnin/pin-github-actions/issues/1 for updates about this
+
+### Usage
+
+```
+Usage: pin-github-actions [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --version
+  -h, --help  Show this message and exit
+
+Commands:
+  pin     replaces tags and branches references by their actual sha
+  update  For each action, update to the latest tag. If no tag exist, leaves
+          the action unchanged
+  login   Authenticate your calls to the GitHub APIs to get a higher rate
+          limit
+  logout
+```
 
 ### Frequently Asked Questions
 
