@@ -1,12 +1,13 @@
 # 📌 pin-github-actions
 
-As outlined by GitHub in their ["using third party actions" documentation](https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-third-party-actions), using a branch name or tag name as a version for a GitHub action is dangerous as neither branches nor tags are immutable. 
+Using a branch name or tag name as a version for a GitHub action is dangerous as neither branches nor tags are immutable. (See [GitHub's documentation](https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-third-party-actions) for more details) 
 
 `pin-github-actions` is a small command-line tool that replaces ("pins") branches or tag names with their corresponding commit sha.
 
 ```diff
 
 ```
+
 
 ### Installation
 

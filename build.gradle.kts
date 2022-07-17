@@ -73,7 +73,6 @@ listOf("X64", "Arm64").forEach { arch ->
     into("pin-github-actions")
     from(tasks.named("linkReleaseExecutableMacos$arch")) {
       rename {
-        println("rename: $it")
         it.replace(".kexe","")
       }
     }

@@ -18,7 +18,7 @@ class PinCommand : CliktCommand(
     } else {
       files
     }
-    process(files, ::pinCallback)
+    process(paths, ::pinCallback)
   }
 }
 

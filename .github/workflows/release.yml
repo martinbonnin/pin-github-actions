@@ -4,10 +4,6 @@ on:
   push:
     tags:
       - '*'
-
-env:
-  GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -Dorg.gradle.daemon=false -Dkotlin.incremental=false"
-
 jobs:
   build:
     runs-on: macos-12
