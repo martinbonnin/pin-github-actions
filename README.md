@@ -29,8 +29,6 @@ You can see it in action [in this commit](https://github.com/martinbonnin/pin-gi
 brew install martinbonnin/repo/pin-github-actions
 ```
 
-> Note: because the binary is not notarized, you'll have to manually open the binary from finder the first time you run it. Watch https://github.com/martinbonnin/pin-github-actions/issues/1 for updates about this
-
 ### Usage
 
 ```
