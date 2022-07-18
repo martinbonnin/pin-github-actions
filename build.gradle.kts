@@ -1,13 +1,14 @@
 plugins {
   id("org.jetbrains.kotlin.multiplatform").version("1.7.10")
   id("org.jetbrains.kotlin.plugin.serialization").version("1.7.10")
+  id("distribution")
 }
 
 repositories {
   mavenCentral()
 }
 
-tasks.register("fatJar", Jar::class.java) {
+tasks.register("allJar", Jar::class.java) {
   dependsOn("jvmJar")
 
   archiveClassifier.set("all")
@@ -18,6 +19,14 @@ tasks.register("fatJar", Jar::class.java) {
 
   exclude("META-INF/versions/9/module-info.class")
 }
+
+val startScriptTaskProvider =
+  tasks.register("createStartScript", org.gradle.jvm.application.tasks.CreateStartScripts::class.java) {
+    outputDir = file("build/start_scripts/")
+    mainClass.set("pga.MainKt")
+    applicationName = "pin-github-actions"
+    classpath = files(configurations["jvmRuntimeClasspath"], tasks.named("jvmJar").map { it.outputs.files.files })
+  }
 
 kotlin {
   targets {
@@ -71,20 +80,22 @@ kotlin {
   }
 }
 
-kotlin.targets.withType(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget::class.java) {
-  binaries.all {
-    binaryOptions["memoryModel"] = "experimental"
+distributions.named("main").configure {
+  contents {
+    from(configurations["jvmRuntimeClasspath"]) {
+      into("lib")
+    }
+    from(tasks.named("jvmJar")) {
+      into("lib")
+    }
+    from(startScriptTaskProvider) {
+      into("bin")
+    }
   }
 }
 
-listOf("X64", "Arm64").forEach { arch ->
-  tasks.register("${arch.toLowerCase()}zip", Zip::class.java) {
-    into("pin-github-actions")
-    from(tasks.named("linkReleaseExecutableMacos$arch")) {
-      rename {
-        it.replace(".kexe","")
-      }
-    }
-    archiveClassifier.set(arch.toLowerCase())
+kotlin.targets.withType(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget::class.java) {
+  binaries.all {
+    binaryOptions["memoryModel"] = "experimental"
   }
 }

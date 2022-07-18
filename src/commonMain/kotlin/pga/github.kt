@@ -81,7 +81,7 @@ private fun getJson(url: String): Any? {
           println(
             """You have reached the GitHub unauthenticated rate limit, please either:
             |- wait $expires
-            |- or authenticate with `pin-github-actions login`
+            |- or authenticate with `pin-github-actions --login`
           """.trimMargin()
           )
           exitProcess(1)
