@@ -49,7 +49,8 @@ data class Tag(val name: String, val sha: String)
  *
  * @throws Exception if there is a network error or if the response cannot be handled
  */
-private fun getShaFromRef(owner: String, name: String, ref: String): String? {
+internal fun getShaFromRef(owner: String, name: String, ref: String): String? {
+  //println("getShaFromRef($owner, $name, $ref)")
   val json = getJson("https://api.github.com/repos/$owner/$name/git/matching-refs/$ref")
   if (json !is List<*>) {
     error("Unexpected response from the GitHub API: $json")

@@ -12,4 +12,16 @@ class MainTest {
       processLine(line, 0, ::pinCallback)
     )
   }
+
+  @Test
+  fun getVersion() {
+    val sha = getShaFromRef("martinbonnin", "run-benchmarks", "heads/main")
+    println(sha)
+  }
+
+  @Test
+  fun regex() {
+    val result = REGEX.matchEntire("        uses: martinbonnin/run-benchmarks@main")
+    check(result != null)
+  }
 }
