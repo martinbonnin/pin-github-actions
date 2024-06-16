@@ -32,18 +32,9 @@ brew install martinbonnin/repo/pin-github-actions
 ### Usage
 
 ```
-Usage: pin-github-actions [OPTIONS] [PATHS]...
-
-Options:
-  --version
-  --login
-  --logout
-  --update    update to the latest known tag instead of just using the current
-  -h, --help  Show this message and exit
-
-Arguments:
-  PATHS  The yaml files to process. You can also pass a directory
-         in which case it will process all yaml files in that directory.
+$ pin-github-actions --update .github
+processing [2/2]... docs.yaml
+done.
 ```
 
 ### Frequently Asked Questions
