@@ -33,9 +33,4 @@ class MainTest {
       assertNotNull(it)
     }
   }
-
-  @Test
-  fun integrationTest() {
-    MainCommand().main(listOf("/Users/mbonnin/git/apollo-kotlin/.github/workflows"))
-  }
 }
