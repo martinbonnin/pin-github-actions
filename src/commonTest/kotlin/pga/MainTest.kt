@@ -2,6 +2,7 @@ package pga
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 class MainTest {
   @Test
@@ -25,7 +26,16 @@ class MainTest {
 
   @Test
   fun regex() {
-    val result = REGEX.matchEntire("        uses: martinbonnin/run-benchmarks@main")
-    check(result != null)
+    REGEX.matchEntire("        uses: martinbonnin/run-benchmarks@main").let {
+      assertNotNull(it)
+    }
+    REGEX.matchEntire("        uses: gradle/actions/setup-gradle@v3").let {
+      assertNotNull(it)
+    }
+  }
+
+  @Test
+  fun integrationTest() {
+    MainCommand().main(listOf("/Users/mbonnin/git/apollo-kotlin/.github/workflows"))
   }
 }
