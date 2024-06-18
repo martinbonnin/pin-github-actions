@@ -51,15 +51,17 @@ data class Tag(val name: String, val sha: String)
  */
 internal fun getShaFromRef(owner: String, name: String, ref: String): String? {
   //println("getShaFromRef($owner, $name, $ref)")
-  val json = getJson("https://api.github.com/repos/$owner/$name/git/matching-refs/$ref")
-  if (json !is List<*>) {
+  /**
+   * Some repositories contain several actions
+   * See https://github.com/orgs/community/discussions/24990
+   * See https://github.com/gradle/actions
+   */
+  val repoName = name.substringBefore('/')
+  val json = getJson("https://api.github.com/repos/$owner/$repoName/git/ref/$ref")
+  if (json !is Map<*, *>) {
     error("Unexpected response from the GitHub API: $json")
   }
-  if (json.isEmpty()) {
-    // This ref does not exist
-    return null
-  }
-  return json.asList[0].asMap["object"].asMap["sha"].asString
+  return json.get("object")?.asMap?.get("sha")?.asString
 }
 
 private fun getJson(url: String): Any? {

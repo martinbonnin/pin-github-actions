@@ -15,8 +15,12 @@ class MainTest {
 
   @Test
   fun getVersion() {
-    val sha = getShaFromRef("martinbonnin", "run-benchmarks", "heads/main")
-    println(sha)
+    getShaFromRef("gradle", "actions/setup-gradle", "tags/v3").also {
+      println(it)
+    }
+    getShaFromRef("martinbonnin", "run-benchmarks", "heads/main").also {
+      println(it)
+    }
   }
 
   @Test

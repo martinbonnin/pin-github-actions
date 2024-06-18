@@ -14,7 +14,7 @@ data class ActionUsage(
 
 val cache = mutableMapOf<ActionUsage, ActionUsage?>()
 
-internal val REGEX = Regex("([ -]*uses: *)([A-Za-z0-9_.-]*)/([A-Za-z0-9_.-]*)@([^\\s#]+)(.*)")
+internal val REGEX = Regex("([ -]*uses: *)([A-Za-z0-9_.-]*)/([A-Za-z0-9_.-/]*)@([^\\s#]+)(.*)")
 internal fun processLine(line: String, index: Int, block: (ActionUsage) -> ActionUsage?): String {
   val matchResult = REGEX.matchEntire(line)
   if (matchResult == null) {
